@@ -2,6 +2,7 @@
 
 from typing import Any
 
+from langchain_core.tools import BaseTool, tool
 import pandas as pd
 
 
@@ -94,6 +95,98 @@ def basic_correlation_check(
             f"Could not calculate correlation for '{first_column}' and '{second_column}'."
         )
     return float(correlation)
+
+
+def create_dataframe_tools(dataframe: pd.DataFrame) -> list[BaseTool]:
+    """Build LangChain tools around the current DataFrame."""
+
+    @tool("list_columns")
+    def list_columns_tool() -> str:
+        """Return all column names in the loaded dataset."""
+        return ", ".join(list_columns(dataframe))
+
+    @tool("show_data_preview")
+    def show_data_preview_tool(rows: int = 5) -> str:
+        """Show the first few rows from the loaded dataset."""
+        return show_data_preview(dataframe, rows)
+
+    @tool("summarize_dataset")
+    def summarize_dataset_tool() -> str:
+        """Summarize the dataset, including shape and column types."""
+        summary = summarize_dataset(dataframe)
+        return _format_dataset_summary(summary)
+
+    @tool("count_missing_values")
+    def count_missing_values_tool() -> str:
+        """Count missing values in each column."""
+        missing_values = count_missing_values(dataframe)
+        return _format_missing_values(missing_values)
+
+    @tool("group_and_aggregate")
+    def group_and_aggregate_tool(
+        group_by_column: str,
+        value_column: str,
+        agg_func: str = "mean",
+    ) -> str:
+        """Group rows by one column and aggregate a numeric column."""
+        result = group_and_aggregate(dataframe, group_by_column, value_column, agg_func)
+        return result.to_string(index=False)
+
+    @tool("top_n_rows")
+    def top_n_rows_tool(
+        sort_by: str,
+        n: int = 5,
+        ascending: bool = False,
+    ) -> str:
+        """Sort the dataset by one column and return the top rows."""
+        result = top_n_rows(dataframe, sort_by, n, ascending)
+        return result.to_string(index=False)
+
+    @tool("basic_correlation_check")
+    def basic_correlation_check_tool(first_column: str, second_column: str) -> str:
+        """Calculate a simple Pearson correlation between two numeric columns."""
+        correlation = basic_correlation_check(dataframe, first_column, second_column)
+        return _format_correlation(first_column, second_column, correlation)
+
+    return [
+        list_columns_tool,
+        show_data_preview_tool,
+        summarize_dataset_tool,
+        count_missing_values_tool,
+        group_and_aggregate_tool,
+        top_n_rows_tool,
+        basic_correlation_check_tool,
+    ]
+
+
+def _format_dataset_summary(summary: dict[str, Any]) -> str:
+    """Convert dataset metadata into a readable multi-line string."""
+    lines = [
+        f"Rows: {summary['row_count']}",
+        f"Columns: {summary['column_count']}",
+        f"All columns: {', '.join(summary['columns'])}",
+        f"Numeric columns: {', '.join(summary['numeric_columns'])}",
+        f"Categorical columns: {', '.join(summary['categorical_columns'])}",
+    ]
+    return "\n".join(lines)
+
+
+def _format_missing_values(missing_values: dict[str, int]) -> str:
+    """Convert missing-value counts into a readable multi-line string."""
+    lines = [f"{column}: {count}" for column, count in missing_values.items()]
+    return "\n".join(lines)
+
+
+def _format_correlation(
+    first_column: str,
+    second_column: str,
+    correlation: float,
+) -> str:
+    """Convert a numeric correlation value into a readable sentence."""
+    return (
+        f"Correlation between {first_column} and {second_column}: "
+        f"{correlation:.3f}"
+    )
 
 
 def _validate_column_exists(dataframe: pd.DataFrame, column_name: str) -> None:
