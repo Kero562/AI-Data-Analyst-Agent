@@ -1,0 +1,21 @@
+product_id,product_name,category,region,month,units_sold,unit_price,revenue,ad_spend,sales
+P001,Wireless Mouse,Electronics,West,2026-01,120,25,3000,1200,3400
+P002,Mechanical Keyboard,Electronics,West,2026-01,85,70,5950,1800,6400
+P003,Office Chair,Furniture,East,2026-01,40,150,6000,1500,6800
+P004,Standing Desk,Furniture,East,2026-01,25,320,8000,2200,9100
+P005,Water Bottle,Accessories,South,2026-01,200,15,3000,600,3300
+P006,Notebook Pack,Accessories,South,2026-01,180,12,2160,500,2500
+P007,Desk Lamp,Home,North,2026-02,95,45,4275,900,4700
+P008,Monitor 24 Inch,Electronics,North,2026-02,60,180,10800,2600,11800
+P009,Laptop Stand,Accessories,West,2026-02,140,35,4900,1100,5400
+P010,Bookshelf,Furniture,South,2026-02,30,210,6300,1700,7200
+P011,Coffee Mug,Home,East,2026-02,160,14,2240,400,2450
+P012,Noise Cancelling Headphones,Electronics,East,2026-02,45,220,9900,3100,10800
+P013,Planner,Accessories,North,2026-03,210,10,2100,,2300
+P014,Floor Mat,Home,West,2026-03,75,30,2250,650,2600
+P015,Drawer Organizer,Home,South,2026-03,110,18,1980,550,2150
+P016,Conference Table,Furniture,North,2026-03,12,450,5400,2000,6100
+P017,USB-C Hub,Electronics,South,2026-03,130,40,5200,1400,5900
+P018,Pen Set,Accessories,East,2026-03,240,8,1920,300,2100
+P019,Air Purifier,Home,North,2026-03,35,160,5600,1600,
+P020,Webcam,Electronics,West,2026-03,90,85,7650,1900,8300
