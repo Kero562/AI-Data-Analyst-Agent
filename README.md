@@ -2,7 +2,7 @@
   <img src="./assets/AnalystAI-Agent.png" alt="AI Data Analyst Agent banner" width="900" />
 </p>
 
-<h1 align="center">AI Data Analyst Agent</h1>
+<h1 align="center">📊 AI Data Analyst Agent 🤖</h1>
 
 <p align="center">
   A beginner-friendly Python project that uses <strong>LangChain</strong> and <strong>pandas</strong><br>
